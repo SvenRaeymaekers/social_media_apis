@@ -1,3 +1,6 @@
+#folders & files
+/python/pw.txt
+/python/twitter_folder/tokens.txt
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
