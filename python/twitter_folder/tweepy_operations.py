@@ -12,6 +12,12 @@ class tweepy_operations:
         recent_tweets = api.mentions_timeline(name=username, count=number_of_tweets)
         return recent_tweets
 
+    def get_number_of_accountid_mentions(client, account_id, number_of_tweets):
+        tweets = []
+        for tweet in tweepy.Paginator(client.get_users_mentions, id=account_id, max_results=100, tweet_fields=["created_at", "author_id", "lang", "source", "public_metrics"]).flatten(limit=number_of_tweets):
+            tweets.append(tweet)
+        return tweets
+
     def authenticate_tokens_and_return_api(tokens):
         auth = tweepy.OAuthHandler(tokens["CONSUMER_KEY"], tokens["CONSUMER_SECRET"])
         auth.set_access_token(tokens["ACCESS_TOKEN"], tokens["ACCESS_TOKEN_SECRET"])
