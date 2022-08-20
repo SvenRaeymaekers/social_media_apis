@@ -5,6 +5,7 @@ import requests
 
 class general_operations:
 
+
     global twitter_url
     twitter_url = r"https://api.twitter.com/2/users/by/username/"
 
