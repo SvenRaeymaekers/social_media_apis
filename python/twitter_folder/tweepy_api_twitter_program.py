@@ -9,11 +9,11 @@ token_file_path = "/python/twitter_folder/tokens.txt"
 
 # below is the topic_id, this is the id that corresponds to the account that you would like to extract tweets from.
 # you can extract this topic id by using Postman and sending a GET request to "https://api.twitter.com/2/users/by/username/Youtube"
-account_name = "Cristiano"  # subject = "delijn", you have to extract this topic id based on the name of the account. can easily be found online how to do this.
-number_of_tweets = 1000
+ # subject = "delijn", you have to extract this topic id based on the name of the account. can easily be found online how to do this.
 
 
-def main():
+
+def main(account_name, number_of_tweets):
 
     tokens = general_operations.read_required_API_tokens_from_text_file(token_file_path)
 
