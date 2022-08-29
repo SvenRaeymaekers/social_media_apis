@@ -1,42 +1,50 @@
-from distutils.command.build import build
+import sys
 from PyQt5.QtWidgets import *
-from PyQt5.QtGui import QFont
-import tweepy_api_twitter_program
+from PyQt5.QtGui import QPalette, QColor
 
 
-def main():
-    app = QApplication([])
-    window = QWidget()
-    window.setGeometry(100, 100, 400, 300)
-    window.setWindowTitle("My Simple GUI")
+class Color(QWidget):
+    def __init__(self, color):
+        super(Color, self).__init__()
+        self.setAutoFillBackground(True)
 
-    layout = QVBoxLayout()
-
-    label = QLabel("Press the button below.")
-    button = QPushButton("Press me.")
-    textbox_account_name = QTextEdit()
-    textbox_number_of_tweets = QTextEdit()
-
-    button.clicked.connect(lambda: on_clicked(textbox_account_name.toPlainText(), int(textbox_number_of_tweets.toPlainText()) ))
-
-    layout.addWidget(label)
-    layout.addWidget(textbox_account_name)
-    layout.addWidget(textbox_number_of_tweets)
-    layout.addWidget(button)
-
-    window.setLayout(layout)
-
-    window.show()
-    app.exec()
+        palette = self.palette()
+        palette.setColor(QPalette.Window, QColor(color))
+        self.setPalette(palette)
 
 
-def on_clicked(account_name, number_of_tweets):
-    tweepy_api_twitter_program.main(account_name, number_of_tweets)
+class MainWindow(QMainWindow):
+    def __init__(self):
 
-    message = QMessageBox()
-    message.setText("done.")
-    message.exec_()
+        super(MainWindow, self).__init__()
+
+        self.setWindowTitle("My App")
+
+        layout1 = QHBoxLayout()
+        layout2 = QVBoxLayout()
+        layout3 = QVBoxLayout()
+
+        layout2.addWidget(Color("red"))
+        layout2.addWidget(Color("yellow"))
+        layout2.addWidget(Color("purple"))
+
+        layout1.addLayout(layout2)
+
+        layout1.addWidget(Color("green"))
+
+        layout3.addWidget(Color("red"))
+        layout3.addWidget(Color("purple"))
+
+        layout1.addLayout(layout3)
+
+        widget = QWidget()
+        widget.setLayout(layout1)
+        self.setCentralWidget(widget)
 
 
-if __name__ == "__main__":
-    main()
+app = QApplication(sys.argv)
+
+window = MainWindow()
+window.show()
+
+app.exec()
