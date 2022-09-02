@@ -1,3 +1,4 @@
+from distutils.log import error
 from socketserver import BaseRequestHandler
 import pandas as pd
 import os
@@ -53,3 +54,14 @@ class general_operations:
             df.index = df.index + 1  # shifting index
             df = df.sort_index()  # sorting by index
         return df
+
+    def retrieve_top_10_tweets_negative_or_positive(tweets_dataframe, sentiment):
+        # function that takes a dataframe of tweets & a sentiment argument which can be 'Positive' or 'Negative'.
+        # if not, throws error.
+        if sentiment != "Positive" and sentiment != "Negative":
+            raise Exception("The function retrieve_top_10_tweets_negative_or_positive requires a sentiment argument of 'negative' or 'positive' .")
+        tweets_dataframe.sort("sentiment_polarity")
+        if sentiment == "positive":
+            return tweets_dataframe.head(10)
+        else:
+            return tweets_dataframe.tail(10)
