@@ -12,6 +12,11 @@ class general_operations:
     global twitter_url
     twitter_url = r"https://api.twitter.com/2/users/by/username/"
 
+    """
+        description: Reads the API tokens from your personal file
+        returns: a dict including your keys 
+    """
+
     def read_required_API_tokens_from_text_file(tokens_file_path):
         tokens = {}
         dir = os.getcwd()
@@ -56,12 +61,14 @@ class general_operations:
         return df
 
     def retrieve_top_10_tweets_negative_or_positive(tweets_dataframe, sentiment):
-        # function that takes a dataframe of tweets & a sentiment argument which can be 'Positive' or 'Negative'.
-        # if not, throws error.
+        """
+        function that takes a dataframe of tweets & a sentiment argument which can be 'Positive' or 'Negative'.
+        if not, throws error.
+        """
         if sentiment != "Positive" and sentiment != "Negative":
             raise Exception("The function retrieve_top_10_tweets_negative_or_positive requires a sentiment argument of 'negative' or 'positive' .")
-        tweets_dataframe.sort("sentiment_polarity")
-        if sentiment == "positive":
+        tweets_dataframe = tweets_dataframe.sort_values("sentiment_polarity")
+        if sentiment == "Positive":
             return tweets_dataframe.head(10)
         else:
             return tweets_dataframe.tail(10)
