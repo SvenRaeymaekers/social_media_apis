@@ -6,8 +6,8 @@ import numpy as np
 class sentiment_analysis:
     def clean_tweet(self, tweet):
         """
-        Utility function to clean tweet text by removing links, special characters
-        using simple regex statements.
+            Utility function to clean tweet text by removing links, special characters
+            using simple regex statements.
         """
         return " ".join(re.sub("(@[A-Za-z0-9]+)|([^0-9A-Za-z \t])|(\w+:\/\/\S+)", " ", tweet).split())
 
@@ -16,7 +16,10 @@ class sentiment_analysis:
 
     def add_sentiment_analysis(self, df):
         # function that adds a new column in a dataframe with the sentiment analysis of the text of the tweet in the dataframe field.
-
+        """
+            Function that adds two columns to a dataframe and calculates the sentiment polarity & subjectivity based on a 'text' column.
+            returns the dataframe
+        """
         df = df.reset_index()
         df["sentiment_polarity"] = ""
         df["sentiment_subjectivity"] = ""

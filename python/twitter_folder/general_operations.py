@@ -12,12 +12,11 @@ class general_operations:
     global twitter_url
     twitter_url = r"https://api.twitter.com/2/users/by/username/"
 
-    """
-        description: Reads the API tokens from your personal file
-        returns: a dict including your keys 
-    """
-
     def read_required_API_tokens_from_text_file(tokens_file_path):
+        """
+            Function that reads the API tokens from your personal file
+            returns: a dict including your keys
+        """
         tokens = {}
         dir = os.getcwd()
 
@@ -28,6 +27,12 @@ class general_operations:
         return tokens
 
     def get_account_id_by_account_name(account_name, BEARER_TOKEN):
+
+        """
+        Function that takes a twitter account name and makes a http-request to retrieve the ID of the twitter account 
+        returns ID of the twitter account name
+        """
+
         http_url = twitter_url + account_name
         Authorization_value = "Bearer {}".format(BEARER_TOKEN)
         response = requests.get(http_url, headers={"Authorization": Authorization_value})
@@ -41,6 +46,11 @@ class general_operations:
 
     def convert_tweet_objects_to_dataframe(tweets):
         # this function converts the tweet objects and stores them in a dataframe.
+
+        """
+        Function that converts the tweepy tweet objects to a dataframe.
+        returns dataframe with tweets
+        """
         df = pd.DataFrame(columns=["tweet_id", "source", "language", "text", "created_at", "author_id", "likes", "replies", "retweets", "quote_count"])
         for tweet in tweets:
             data = tweet.data
@@ -62,13 +72,15 @@ class general_operations:
 
     def retrieve_top_10_tweets_negative_or_positive(tweets_dataframe, sentiment):
         """
-        function that takes a dataframe of tweets & a sentiment argument which can be 'Positive' or 'Negative'.
-        if not, throws error.
+        Function that takes a dataframe of tweets & a sentiment argument which can be 'Positive' or 'Negative'.
+        it returns the most positive or negative tweets.
+
         """
+
         if sentiment != "Positive" and sentiment != "Negative":
             raise Exception("The function retrieve_top_10_tweets_negative_or_positive requires a sentiment argument of 'negative' or 'positive' .")
         tweets_dataframe = tweets_dataframe.sort_values("sentiment_polarity")
         if sentiment == "Positive":
-            return tweets_dataframe.head(10)
-        else:
             return tweets_dataframe.tail(10)
+        else:
+            return tweets_dataframe.head(10)
